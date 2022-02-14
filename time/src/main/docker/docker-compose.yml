@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: 'time:latest'
+    build:
+      context: .
+    depends_on:
+      - db
+    ports:
+      - "8180:8080"
+      - "8787:18787"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/time
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres'
+    ports:
+      - "5400:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
